@@ -116,7 +116,7 @@ const readStatus = KelumXzsettings('READ_STATUS') || 'true';
       reply
     }) => {
     if (auto_react === 'on' && !isCmd) {
-      const emojis = ['😊', '👍', '😂', '💯'];
+      const emojis = ['🌵', '🎄', '🌲', '🌳', '🌴', '🌱', '🌿', '☘️', '🍀', '🎍', '🪴', '🐚', '🍃', '🎋', '🌷', '🌹', '🥀', '💐', '🌾', '🌺', '🌸', '🪨', '🌼', '⚡', '✨', '💫', '⭐', '🪐', '🌑', '🌝', '🌚', '☂️', '☔', '💧', '⛅', '🎾', '🏐', '🎲', '🧩', '🧼', '🎈', '🪣', '🏮'];
       const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
       client.sendMessage(from, {
