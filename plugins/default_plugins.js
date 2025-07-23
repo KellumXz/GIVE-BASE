@@ -108,7 +108,7 @@ const startTime = Date.now()
 
 cmd({
   pattern: "menu",
-  alias: ["allmenu","list","alllist","cmds","men"],
+  alias: ["menus","list","alllist","cmds","men"],
   desc: "Show bot all commands",
   category: "main",
   react: "🗒️",
