@@ -315,8 +315,8 @@ if (oneView !== 'off' && getContentType(mek.message) === 'viewOnceMessage') {
             isForwarded: true,
             externalAdReply: {
               title: `KELUMXZ-MD`,
-              body: `© Develop by : @KelumXz`,
-              thumbnailUrl: `https://i.ibb.co/s9kLSD5D/beb0fb2dedd70d8c76daf4826c307e8e.jpg`,
+              body: `This is a lightweight, stable WhatsApp bot designed to run 24/7. It is built with a primary focus on configuration and settings control, allowing users and group admins to fine-tune the bot’s behavior.`,
+              thumbnailUrl: `https://files.catbox.moe/hikhh5.jpg`,
               mediaType: 1,
               renderLargerThumbnail: false
             }
