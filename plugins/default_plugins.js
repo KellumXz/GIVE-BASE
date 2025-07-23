@@ -49,7 +49,7 @@ cmd({
         body: '( The Best Simple XX WhatsApp )',
         mediaType: 1,
         sourceUrl: "https://by.kelumxz/",
-        thumbnailUrl: "https://files.catbox.moe/gtg2a2.jpg", // preview image only
+        thumbnailUrl: "https://files.catbox.moe/hyi9wl.jpg", // preview image only
         renderLargerThumbnail: true,
         showAdAttribution: false
       }
@@ -119,9 +119,8 @@ cmd({
 }) => {
   const caption = `\`@ Hellow :\` ${pushname}\n*-> Iᴛᴢ: kelum'Xz* WhatsApp simple bot !
 
-*💫 NOTE*
+*N O T E*
 > මෙය Give එකක් මගින් ලබාදීමට සදා ඇති නිසාවෙන් කිසිම main menu එකක් add නොමැත.ඔබට *දැනට add කරලා තියන cmd බැලීම සදහා allmenu cmd එක try කරන්න*( මෙය Beta Tester)
-
 *◯ A B O U T*
 > This is a lightweight, stable WhatsApp bot designed to run 24/7. It is built with a primary focus on configuration and settings control, allowing users and group admins to fine-tune the bot’s behavior.*◯ D E P L O Y* https://kelumxz-md.vercel.app
 > *@kelum'Xz*`;
@@ -141,7 +140,7 @@ cmd({
         body: '( The Best Simple XX WhatsApp )',
         mediaType: 1,
         sourceUrl: "https://by.kelumxz/",
-        thumbnailUrl: "https://files.catbox.moe/fkw8ac.jpg", // preview image only
+        thumbnailUrl: "https://files.catbox.moe/h2ogd2.jpg", // preview image only
         renderLargerThumbnail: true,
         showAdAttribution: false
       }
