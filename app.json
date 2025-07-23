@@ -1,0 +1,26 @@
+{
+  "name": "ttttg",
+  "description": "Javascript WhatsApp bot made by Danuzz and Kalumzz",
+  "logo": "https://i.ibb.co/Lhb7h00b/SulaMd.jpg",
+  "keywords": ["bot"],
+  "success_url": "/",
+
+  "env": {
+    "SESSION_ID": {
+      "description": "Put the session-id here.",
+      "required": true
+    },  
+    
+    "CREATE_NUMBER": {
+      "description": "Put your alive authtoken here.",
+      "required": true
+    }   
+},
+
+     "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+        }
+     ],
+  "stack": "heroku-24"
+}
