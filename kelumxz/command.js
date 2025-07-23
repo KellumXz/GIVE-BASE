@@ -1,6 +1,6 @@
 const commands = [];
 const fetch = require('node-fetch');
-const { CREATE_NUMBER } = require('./config');
+const { CREATE_NUMBER } = require('../config');
 
 // 🔗 Normal User Database
 const firebasePath = (number = '') =>
