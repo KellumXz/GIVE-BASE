@@ -67,7 +67,7 @@ async function connectToWA() {
   const presence_fake = KelumXzsettings('PRESENCE_FAKE') || 'both';
   const anti_call = KelumXzsettings('ANTI_CALL') || 'on';
   const anti_delete = KelumXzsettings('ANTI_DELETE') || 'on';
-const autoRead = KelumXzsettings('AUTO_READ') || 'on';
+const autoRead = KelumXzsettings('AUTO_READ') || 'off';
 const oneView = KelumXzsettings('ONE_VIEW') || 'on';
 const readStatus = KelumXzsettings('READ_STATUS') || 'true';
 
