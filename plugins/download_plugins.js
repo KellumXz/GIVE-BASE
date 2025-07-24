@@ -5,9 +5,124 @@ const { fetchJson } = require('../lib/functions');
 const FormData = require('form-data');
 const fs = require('fs');
 const os = require('os');
+const { ytsearch } = require('@dark-yasiya/yt-dl.js');
+const yts = require('yt-search');
 //const apkdl = require('../lib/apkdl');
 const path = require("path");
 //=======================================
+cmd({ 
+    pattern: "song", 
+    alias: ["mp3", "ytmp3"], 
+    react: "🎧", 
+    desc: "Download Youtube song", 
+    category: "main", 
+    use: '.song < Yt url or Name >', 
+    filename: __filename 
+}, async (conn, mek, m, { from, q, reply }) => { 
+    try { 
+        if (!q) return await reply("Please provide a YouTube URL or song name.");
+        
+        const yt = await ytsearch(q);
+        if (yt.results.length < 1) return reply("No results found!");
+        
+        const yts = yt.results[0];  
+        const apiUrl = `https://apis.davidcyriltech.my.id/download/ytmp4?url=${encodeURIComponent(yts.url)}`;
+        
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        if (data.status !== 200 || !data.success || !data.result.download_url) {
+            return reply("Failed to fetch the audio. Please try again later.");
+        }
+
+        // External Ad Reply Style Context Info
+        const contextInfo = {
+            externalAdReply: {
+                title: yts.title,
+                body: "KELUMXZ-MINI",
+                thumbnailUrl: yts.thumbnail,
+                mediaType: 2,
+                renderLargerThumbnail: true,
+                mediaUrl: yts.url,
+                sourceUrl: yts.url
+            }
+        };
+        await conn.sendMessage(from, { 
+            audio: { url: data.result.download_url }, 
+            mimetype: "audio/mpeg", 
+            ptt: false, // true if you want to send as voice note
+            contextInfo
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error(e);
+        reply("An error occurred. Please try again later.");
+    }
+});
+//=======================================
+
+cmd({
+    pattern: "video",
+    alias: ["mp4", "ytmp4"],
+    react: "🎥",
+    desc: "Download video from YouTube",
+    category: "download",
+    use: ".video <query or url>",
+    filename: __filename
+}, async (conn, m, mek, { from, q, reply }) => {
+    try {
+        if (!q) return await reply("❌ Please provide a video name or YouTube URL!");
+
+        let videoUrl, videoData;
+
+        if (q.match(/(youtube\.com|youtu\.be)/)) {
+            const videoId = q.split(/[=/]/).pop();
+            const videoInfo = await yts({ videoId });
+            if (!videoInfo || !videoInfo.title) return await reply("❌ Invalid YouTube link.");
+            videoData = videoInfo;
+            videoUrl = q;
+        } else {
+            const search = await yts(q);
+            if (!search.videos.length) return await reply("❌ No results found!");
+            videoData = search.videos[0];
+            videoUrl = videoData.url;
+        }
+
+        const apiUrl = `https://apis.davidcyriltech.my.id/download/ytmp4?url=${encodeURIComponent(videoUrl)}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (!data.success || !data.result.download_url) {
+            return await reply("❌ Failed to download video!");
+        }
+
+        const contextInfo = {
+            externalAdReply: {
+                title: videoData.title,
+                body: "Powered by KelumZ",
+                thumbnailUrl: videoData.thumbnail,
+                mediaType: 2,
+                renderLargerThumbnail: true,
+                mediaUrl: videoUrl,
+                sourceUrl: videoUrl
+            }
+        };
+
+        await conn.sendMessage(from, {
+            video: { url: data.result.download_url },
+            mimetype: 'video/mp4',
+            caption: `🎬 *${videoData.title}*`,
+            contextInfo
+        }, { quoted: mek });
+
+    } catch (error) {
+        console.error(error);
+        await reply(`❌ Error: ${error.message}`);
+    }
+});
+//=======================================
+
+
 cmd({
   pattern: "tiktok",
   alias: ["ttdl", "tt", "tiktokdl"],
