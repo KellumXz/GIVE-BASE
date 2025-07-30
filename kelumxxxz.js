@@ -55,61 +55,50 @@ if (!fs.existsSync(__dirname + '/auth_info_baileys/creds.json')) {
     console.log("💡 Session downloaded");
   });
 }
-
-// ======= BUTTON FUNCTIONS ==============
-const buttonFunctions = {
-  // 1. Simple Text Buttons
-  sendButtonText: (jid, buttons = [], text, footer, quoted = '', options = {}) => {
-    let buttonMessage = {
-      text,
-      footer,
-      buttons,
-      headerType: 2,
-      ...options
-    }
-    conn.sendMessage(jid, buttonMessage, { quoted, ...options })
-  },
-
-  // 2. Image with Buttons
-  send5ButImg: async(jid, text = '', footer = '', img, but = [], options = {}) => {
-    let message = await prepareWAMessageMedia({ image: img }, { upload: conn.waUploadToServer })
-    var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
-      templateMessage: {
-        hydratedTemplate: {
-          imageMessage: message.imageMessage,
-          "hydratedContentText": text,
-          "hydratedFooterText": footer,
-          "hydratedButtons": but
-        }
+//=======================================
+const initButtonFunctions = (connection) => {
+  return {
+    // 1. Simple Text Buttons
+    sendButtonText: (jid, buttons = [], text, footer, quoted = '', options = {}) => {
+      let buttonMessage = {
+        text,
+        footer,
+        buttons,
+        headerType: 2,
+        ...options
       }
-    }), options)
-    conn.relayMessage(jid, template.message, { messageId: template.key.id })
-  },
+      return connection.sendMessage(jid, buttonMessage, { quoted, ...options });
+    },
 
-  // 3. List Message
-  sendListMsg: (jid, text = '', footer = '', title = '', butText = '', sections = [], quoted) => {
-    let listMessage = {
-      text: text,
-      footer: footer,
-      title: title,
-      buttonText: butText,
-      sections
+    // 2. Image with Buttons
+    send5ButImg: async(jid, text = '', footer = '', img, but = [], options = {}) => {
+      let message = await prepareWAMessageMedia({ image: img }, { upload: connection.waUploadToServer });
+      var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
+        templateMessage: {
+          hydratedTemplate: {
+            imageMessage: message.imageMessage,
+            "hydratedContentText": text,
+            "hydratedFooterText": footer,
+            "hydratedButtons": but
+          }
+        }
+      }), options);
+      return connection.relayMessage(jid, template.message, { messageId: template.key.id });
+    },
+
+    // 3. List Message
+    sendListMsg: (jid, text = '', footer = '', title = '', butText = '', sections = [], quoted) => {
+      let listMessage = {
+        text: text,
+        footer: footer,
+        title: title,
+        buttonText: butText,
+        sections
+      }
+      return connection.sendMessage(jid, listMessage, { quoted });
     }
-    conn.sendMessage(jid, listMessage, { quoted })
-  },
-
-  // 4. Template Buttons
-  sendTemplateButtons: async(jid, buttons = [], text, footer, quoted, options = {}) => {
-    let message = {
-      text: text,
-      footer: footer,
-      templateButtons: buttons,
-      ...options
-    }
-    await conn.sendMessage(jid, message, { quoted })
-  }
-}
-
+  };
+};
 // ======= CONNECT TO WHATSAPP ============
 async function connectToWA() {
   console.log("🗿 Connecting wa bot...!");
@@ -129,7 +118,8 @@ async function connectToWA() {
     version
   });
 
-  // Add button functions to conn object
+  // Initialize button functions
+  const buttonFunctions = initButtonFunctions(conn);
   Object.assign(conn, buttonFunctions);
 
   //======= CONNECTION EVENTS ===============
